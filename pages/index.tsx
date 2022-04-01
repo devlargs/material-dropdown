@@ -3,7 +3,7 @@ import { Box, Checkbox, FormControl, FormLabel, Radio, RadioGroup, TextField } f
 import { FC, useState } from 'react';
 import { HeroHeadingTitle } from 'styles/typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import CURRENCIES from '@components/Dropdown/constants/currencies';
+import CURRENCIES from 'constants/currencies';
 import { styled } from '@mui/material/styles';
 import MuiGrid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
