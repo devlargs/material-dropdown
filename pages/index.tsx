@@ -1,5 +1,5 @@
 import Dropdown from '@components/Dropdown';
-import { Box, Checkbox, FormControl, FormLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import { Box, FormControl, FormLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { FC, useState } from 'react';
 import { HeroHeadingTitle } from 'styles/typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -18,41 +18,15 @@ const Grid = styled(MuiGrid)(({ theme }) => ({
 }));
 
 const Home: FC = () => {
-  const [multiple, setMultiple] = useState(false);
-  const [value, setValue] = useState<string | string[]>('');
   const [helper, setHelper] = useState('Sample helper text');
   const [label, setLabel] = useState('Select Currency');
   const [type, setType] = useState<SelectStatus>('');
-
-  const onChange = (event): void => {
-    const temp = event.target.value;
-
-    if (multiple) {
-      if (value.includes(temp)) {
-        setValue((items: string[]) => {
-          return items.filter((item) => item !== temp);
-        });
-      } else {
-        setValue((prev) => [...prev, ...temp]);
-      }
-    }
-
-    setValue(temp);
-  };
 
   return (
     <Grid container>
       <Grid item xs px={8}>
         <HeroHeadingTitle>Dropdown</HeroHeadingTitle>
-        <Dropdown
-          data={CURRENCIES}
-          onChange={onChange}
-          multiple={multiple}
-          value={value}
-          helperText={helper}
-          label={label}
-          type={type}
-        />
+        <Dropdown data={CURRENCIES} multiple={true} helperText={helper} label={label} type={type} />
       </Grid>
       <Divider orientation="vertical" flexItem></Divider>
       <Grid item xs px={8}>
@@ -62,18 +36,6 @@ const Home: FC = () => {
         <Box mt={2} />
         <TextField label="Select Label" value={label} onChange={(e): void => setLabel(e.target.value)} />
         <Box mt={2} />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={multiple}
-              onChange={(e): void => {
-                setValue(e.target.checked ? [] : '');
-                setMultiple(e.target.checked);
-              }}
-            />
-          }
-          label="Multiple"
-        />
 
         <Box />
         <FormControl>
@@ -83,7 +45,7 @@ const Home: FC = () => {
               <FormControlLabel
                 key={item}
                 value={item}
-                control={<Radio onChange={(e) => setType(e.target.value.toLowerCase() as SelectStatus)} />}
+                control={<Radio onChange={(e): void => setType(e.target.value.toLowerCase() as SelectStatus)} />}
                 label={item === '' ? 'None' : item}
               />
             ))}

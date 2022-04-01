@@ -1,10 +1,10 @@
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import * as React from 'react';
-import { SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 const StyledTextField = styled(TextField)`
   margin-top: 10px;
@@ -12,23 +12,29 @@ const StyledTextField = styled(TextField)`
 
 export type SelectStatus = 'error' | 'success' | '';
 
+type SelectProps = {
+  value: string;
+  label: string;
+};
+
 type DropdownProps = {
-  data: Array<{
-    value: string;
-    label: string;
-  }>;
+  data: SelectProps[];
   helperText?: string;
   label?: string;
   type?: SelectStatus;
   multiple?: boolean;
-  onChange?: ((event: SelectChangeEvent<unknown>, child: ReactNode) => void) | undefined;
+  onChange?: (value: SelectProps[]) => void;
   className?: string;
 };
 
-const Dropdown: FC<DropdownProps> = ({ data, helperText, label, type, multiple, className }) => {
+const Dropdown: FC<DropdownProps> = ({ data, helperText, label, type, multiple, className, onChange }) => {
   const [value, setValue] = useState<string | string[]>(multiple ? [] : '');
 
-  const onChange = (event): void => {
+  useEffect(() => {
+    setValue(multiple ? [] : '');
+  }, [multiple]);
+
+  const onDropdownSelect = (event): void => {
     const temp = event.target.value;
 
     if (multiple) {
@@ -42,6 +48,7 @@ const Dropdown: FC<DropdownProps> = ({ data, helperText, label, type, multiple, 
     }
 
     setValue(temp);
+    onChange?.(temp);
   };
 
   return (
@@ -51,9 +58,9 @@ const Dropdown: FC<DropdownProps> = ({ data, helperText, label, type, multiple, 
       label={label}
       helperText={helperText}
       fullWidth
-      value={value}
+      value={multiple ? (value.length ? value : []) : value}
       SelectProps={{
-        onChange,
+        onChange: onDropdownSelect,
         multiple: multiple || false,
       }}
       {...(type && {
