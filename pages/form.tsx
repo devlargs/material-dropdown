@@ -31,9 +31,9 @@ const Form: FC = () => {
       <Box width="50%">
         <form>
           <TextField
+            value={name}
             placeholder="Enter Name"
             style={{ width: '100%' }}
-            value={name}
             onChange={handleChange}
             id="name"
           />

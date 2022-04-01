@@ -6,19 +6,15 @@ describe('Sample Form', () => {
   it('should select multiple options in a dropdown', () => {
     cy.get('body').click(0, 0);
     cy.get('.multi-currency').click();
-    cy.get('.MuiMenuItem-root:nth-child(2)').click();
-    cy.get('.MuiMenuItem-root:nth-child(3)').click();
-    cy.get('.MuiMenuItem-root:nth-child(4)').click();
-    cy.get('.MuiMenuItem-root:nth-child(5)').click();
-    cy.get('.MuiMenuItem-root:nth-child(5)').click();
-    cy.get('.MuiMenuItem-root:nth-child(4)').click();
-    cy.get('.MuiMenuItem-root:nth-child(3)').click();
-    cy.get('.MuiMenuItem-root:nth-child(2)').click();
-    cy.get('.MuiMenuItem-root:nth-child(1)').click();
+
+    Array.from({ length: 4 }).forEach((_, i) => {
+      cy.get(`.MuiMenuItem-root:nth-child(${i + 1})`).click();
+    });
+
     cy.get('body').click(0, 0);
   });
 
-  it('should show edit input and dropdown elements and compare form value', () => {
+  it('should edit input & dropdown elements and compare form values', () => {
     cy.get('#name').click();
     cy.get('#name').type('Scarlett johanson');
 
