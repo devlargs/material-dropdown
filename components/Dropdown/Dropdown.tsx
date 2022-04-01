@@ -1,11 +1,45 @@
-import { FC } from 'react';
-import { HeadingTitle } from 'styles/typography';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import { FC, ReactNode } from 'react';
+import * as React from 'react';
+import { SelectChangeEvent } from '@mui/material';
 
-const Dropdown: FC = () => {
+type DropdownProps = {
+  data: Array<{
+    value: string;
+    label: string;
+  }>;
+  helperText?: string;
+  label?: string;
+  type?: 'error' | 'success';
+  multiple?: boolean;
+  onChange: ((event: SelectChangeEvent<unknown>, child: ReactNode) => void) | undefined;
+  value: string | string[];
+};
+
+const Dropdown: FC<DropdownProps> = ({ data, helperText, label, type, multiple, value, onChange }) => {
   return (
-    <>
-      <HeadingTitle>Dropdown</HeadingTitle>
-    </>
+    <TextField
+      select
+      label={label}
+      helperText={helperText}
+      fullWidth
+      value={value}
+      SelectProps={{
+        onChange,
+        multiple: multiple || false,
+      }}
+      {...(type && {
+        color: type,
+        focused: true,
+      })}
+    >
+      {data.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 };
 
