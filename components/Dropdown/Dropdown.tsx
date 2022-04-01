@@ -13,10 +13,10 @@ type DropdownProps = {
   }>;
   helperText?: string;
   label?: string;
-  type: SelectStatus;
+  type?: SelectStatus;
   multiple?: boolean;
-  onChange: ((event: SelectChangeEvent<unknown>, child: ReactNode) => void) | undefined;
-  value: string | string[];
+  onChange?: ((event: SelectChangeEvent<unknown>, child: ReactNode) => void) | undefined;
+  value?: string | string[];
 };
 
 const Dropdown: FC<DropdownProps> = ({ data, helperText, label, type, multiple, value, onChange }) => {
@@ -28,7 +28,9 @@ const Dropdown: FC<DropdownProps> = ({ data, helperText, label, type, multiple, 
       fullWidth
       value={value}
       SelectProps={{
-        onChange,
+        ...(onChange && {
+          onChange,
+        }),
         multiple: multiple || false,
       }}
       {...(type && {
