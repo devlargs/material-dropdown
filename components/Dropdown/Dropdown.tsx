@@ -4,6 +4,8 @@ import { FC, ReactNode } from 'react';
 import * as React from 'react';
 import { SelectChangeEvent } from '@mui/material';
 
+export type SelectStatus = 'error' | 'success' | '';
+
 type DropdownProps = {
   data: Array<{
     value: string;
@@ -11,7 +13,7 @@ type DropdownProps = {
   }>;
   helperText?: string;
   label?: string;
-  type?: 'error' | 'success';
+  type: SelectStatus;
   multiple?: boolean;
   onChange: ((event: SelectChangeEvent<unknown>, child: ReactNode) => void) | undefined;
   value: string | string[];

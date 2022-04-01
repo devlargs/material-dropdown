@@ -1,4 +1,4 @@
-export const CURRENCIES = [
+const CURRENCIES = [
   {
     value: 'USD',
     label: '$ (Dollar)',
@@ -20,3 +20,5 @@ export const CURRENCIES = [
     label: '₱ (Peso)',
   },
 ];
+
+export default CURRENCIES;
